@@ -35,7 +35,7 @@ mergedBootBlockAndUboot_xml = os.path.join(inputs_dir, "mergedBootBlockAndUboot.
 mergedBootBlockAndUboot_basic_bin = os.path.join(basic_outputs_dir, "mergedBootBlockAndUboot.bin")
 mergedBootBlockAndUboot_secure_bin = os.path.join(secure_outputs_dir, "mergedBootBlockAndUboot.bin")
 
-merged_1FF_xml = "merged_1FF.xml"
+merged_1FF_xml = os.path.join(inputs_dir, "merged_1FF.xml")
 merged_1FF_basic_bin = os.path.join(basic_outputs_dir, "merged_1FF.bin")
 
 rsa_private_key_0_bin = os.path.join(inputs_dir, "rsa_private_key_0.bin")

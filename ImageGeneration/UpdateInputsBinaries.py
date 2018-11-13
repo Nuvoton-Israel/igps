@@ -10,7 +10,7 @@ import os
 
 from shutil import copyfile
 
-inputs_dir = "inputs"
+inputs_dir = os.path.join("ImageGeneration", "inputs")
 
 bb_bin = "Poleg_bootblock.bin"
 bb_header_xml = "BootBlockAndHeader.xml"
@@ -23,9 +23,6 @@ uboot_env_file = "uboot_env.bin"
 
 def copy_files(src, dest):
 
-	dir_path = os.path.dirname(os.path.realpath(__file__))
-	print("copy_files %s" % (dir_path))
-	
 	dest_file = os.path.join(inputs_dir, dest)
 
 	if not os.path.isdir(inputs_dir):

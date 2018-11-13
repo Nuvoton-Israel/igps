@@ -7,6 +7,7 @@
 
 import sys
 import os
+import UartUpdate
 
 def print_error_bad_parameter(function, parameter):
 	errorStr = "Error: In %s, '%s' is illegal paramter!" % (function, parameter)

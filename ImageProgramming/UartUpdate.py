@@ -10,14 +10,15 @@ import os
 
 uartUpdateTool = "Uartupdatetool"
 linux_prefix = "sudo ./"
+
 serialportnum_file = os.path.join(".", "SerialPortNumber.txt")
 serialportbaudrate_file = os.path.join(".", "SerialPortBaudRate.txt")
 
 class UartError(Exception):
 	def __init__(self, value):
-		self.value = value
+		self.strerror = "UartUpdateTool error value:" + str(value)
 	def __str__(self):
-		return repr(self.value)
+		return repr(self.strerror)
 
 def uart_write_to_mem(port, baudrate, addr, file):
 
@@ -27,7 +28,6 @@ def uart_write_to_mem(port, baudrate, addr, file):
 
 	cmd = "%s -port %s -baudrate %d -opr wr -addr %s -file %s" \
 			% (_uartUpdateTool, port, baudrate, addr, file)
-	print(cmd)
 	rc = os.system(cmd)
 	if rc != 0:
 		expStr = "Writing %s to %s failed (port %s baudrate %d)" \
@@ -42,7 +42,6 @@ def uart_read_from_mem(port, baudrate, addr, size, file):
 
 	cmd = "%s -port %s -baudrate %d -opr rd -addr %s -size %d -file %s" \
 			% (_uartUpdateTool, port, baudrate, addr, size, file)
-	print(cmd)
 	rc = os.system(cmd)
 	if rc != 0:
 		expStr = "Reading from %s failed (port %s baudrate %d)" \
@@ -57,7 +56,6 @@ def uart_execute_nonreturn_code(port, baudrate, addr):
 
 	cmd = "%s -port %s -baudrate %d -opr go -addr %s" \
 			% (_uartUpdateTool, port, baudrate, addr)
-	print(cmd)
 	rc = os.system(cmd)
 	if rc != 0:
 		expStr = "Executing nonreturn code from %d failed (port %s baudrate %d)" \
@@ -72,7 +70,6 @@ def uart_execute_returnable_code(port, baudrate, addr):
 
 	cmd = "%s -port %s -baudrate %d -opr call -addr %s" \
 			% (_uartUpdateTool, port, baudrate, addr)
-	print(cmd)
 	rc = os.system(cmd)
 	if rc != 0:
 		expStr = "Executing returnable code from %d failed (port %s baudrate %d)" \
@@ -88,15 +85,14 @@ def check_com():
 	print("----------------------------------------------------")
 	print(" Scan COM ports, searching for a Poleg in UFPP mode ")
 	print("----------------------------------------------------")
-	
 	_uartUpdateTool = uartUpdateTool
 	if os.name != "nt":
-		_uartUpdateTool = "./" + uartUpdateTool
+		_uartUpdateTool = linux_prefix + uartUpdateTool
 
-	cmd = "%s -baudrate %d -opr scan" \
-			% (_uartUpdateTool, baudrate)
-	print(cmd)
+	cmd = "%s -opr scan -baudrate %d" % (_uartUpdateTool, baudrate)
 	rc = os.system(cmd)
+	if rc != 0:
+		print("Scanning failed. Port will be loaded from %s" % (serialportnum_file))
 
 	if os.path.isfile(serialportnum_file):
 		file = open(serialportnum_file, "r")

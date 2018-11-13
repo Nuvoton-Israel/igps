@@ -25,6 +25,9 @@ FW_Programming_bin = os.path.join(Intermediate_dir, "MergedProgramming.bin")
 FW_bin_intermediate = os.path.join(Intermediate_dir, "mergedBootBlockAndUboot.bin")
 
 try:
+	currpath = os.getcwd()
+	os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
 	if not os.path.isdir(Intermediate_dir):
 		os.mkdir(Intermediate_dir)
 
@@ -41,3 +44,5 @@ try:
 
 except Exception as e:
 	print(e)
+finally:
+	os.chdir(currpath)

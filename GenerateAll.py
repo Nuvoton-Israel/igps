@@ -10,6 +10,8 @@ import os
 import ImageGeneration.GenerateImages
 
 try:
+	currpath = os.getcwd()
+	os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 	print("==========================================================")
 	print("== Generate All Images")
@@ -18,4 +20,5 @@ try:
 
 except Exception as e:
 	pass
-
+finally:
+	os.chdir(currpath)

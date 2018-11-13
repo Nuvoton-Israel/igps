@@ -24,6 +24,9 @@ FW_Programming_bin = os.path.join(Intermediate_dir, "Format.bin")
 FW_bin_intermediate = os.path.join(Intermediate_dir, "All_FF.bin")
 
 try:
+	currpath = os.getcwd()
+	os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
 	if not os.path.isdir(Intermediate_dir):
 		os.mkdir(Intermediate_dir)
 
@@ -37,3 +40,5 @@ try:
 									os.path.abspath(FW_Programming_bin))
 except Exception as e:
 	print(e)
+finally:
+	os.chdir(currpath)
