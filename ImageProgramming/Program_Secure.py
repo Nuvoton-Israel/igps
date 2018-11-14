@@ -43,10 +43,10 @@ def run():
 
 		ImageGeneration.BinaryGenerator.generate_binary(	os.path.abspath(KEY_Programming_xml),	\
 									os.path.abspath(KEY_prog_header))
-                
+
 		ImageGeneration.BinaryGenerator.generate_binary(	os.path.abspath(KEY_Reading_xml),		\
 									os.path.abspath(KEY_read_header))
-                
+
 		msg = "Are you sure you want to program keys (cannot be changed later)? (y/n)"
 		reply = str(raw_input(msg).strip())
 		if reply == "y":
@@ -65,10 +65,10 @@ def run():
 		################################################################
 		ImageGeneration.BinaryGenerator.generate_binary(	os.path.abspath(FUSE_Programming_xml),	\
 									os.path.abspath(FUSE_prog_header))
-                
+
 		ImageGeneration.BinaryGenerator.generate_binary(	os.path.abspath(FUSE_Reading_xml),		\
 									os.path.abspath(FUSE_read_header))	
-                
+
 		msg = "Are you sure you want to program fuses (one time programming)? (y/n)"
 		reply = str(raw_input(msg).strip())
 		if reply == "y":

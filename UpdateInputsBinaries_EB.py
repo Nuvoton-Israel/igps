@@ -31,6 +31,8 @@ linux_dtb_source = os.path.join(versions_dir, linux_dtb_nuvoton)
 uboot_env_source = os.path.join(ref_dir, "uboot_env_eb.bin")
 
 try:
+	currpath = os.getcwd()
+	os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 	print("----------------------------------------")
 	print("Updating input binaries for Nuvoton's EB")
@@ -52,3 +54,5 @@ except (IOError) as e:
 	print("Error Updating input Binaries (%s)" % (e.strerror))
 except:
 	print("Error Updating input Binaries")
+finally:
+	os.chdir(currpath)

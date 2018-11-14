@@ -1,0 +1,71 @@
+<!-- SPDX-License-Identifier: GPL-2.0
+#
+# Nuvoton IGPS: Image Generation And Programming Scripts For Poleg BMC
+#
+# Copyright (C) 2018 Nuvoton Technologies, All Rights Reserved
+#--------------------------------------------------------------------------->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Bin_Ecc_Map>
+	<!-- BMC mandatory fields -->
+	<ImageProperties>
+		<BinSize>0</BinSize>         <!-- If 0 the binary size will be calculated by the tool -->
+		<PadValue>0xFF</PadValue>	<!-- Byte value to pad the empty areas, default is 0 -->
+	</ImageProperties>
+		
+	<BinField>
+		<name>BootBlock</name>         <!-- name of field -->
+		<config>
+			<offset>0</offset>            <!-- offset in the header -->
+			<size format='FileSize'>output_binaries/BootBlockAndHeader.bin</size>              <!-- size in the header -->
+		</config>
+		<content format='FileContent'>output_binaries/BootBlockAndHeader.bin</content>  <!-- content the user should fill -->
+	</BinField>
+		
+	<BinField>
+		<name>u-boot</name>         <!-- name of field -->
+		<config>
+			<offset format='FileSize' align='0x1000'>output_binaries/BootBlockAndHeader.bin</offset>            <!-- offset in the header -->
+			<size format='FileSize'>output_binaries/UbootAndHeader.bin</size>              <!-- size in the header -->
+		</config>
+		<content format='FileContent'>output_binaries/UbootAndHeader.bin</content>  <!-- content the user should fill -->
+	</BinField>
+		
+	<BinField>
+		<name>uboot_env</name>         <!-- name of field -->
+		<config>
+			<offset>0x80000</offset>            <!-- offset in the header -->
+			<size format='FileSize'>inputs/uboot_env.bin</size>              <!-- size in the header -->
+		</config>
+		<content format='FileContent'>inputs/uboot_env.bin</content>  <!-- content the user should fill -->
+	</BinField>
+		
+	<BinField>
+		<name>linux_fdt</name>         <!-- name of field -->
+		<config>
+			<offset>0x1E0000</offset>            <!-- offset in the header -->
+			<size format='FileSize'>inputs/npcm750.dtb</size>              <!-- size in the header -->
+		</config>
+		<content format='FileContent'>inputs/npcm750.dtb</content>  <!-- content the user should fill -->
+	</BinField>
+		
+	<BinField>
+		<name>linux_uimage</name>         <!-- name of field -->
+		<config>
+			<offset>0x200000</offset>            <!-- offset in the header -->
+			<size format='FileSize'>inputs/uimage</size>              <!-- size in the header -->
+		</config>
+		<content format='FileContent'>inputs/uimage</content>  <!-- content the user should fill -->
+	</BinField>
+		
+	<BinField>
+		<name>linux_romfs</name>         <!-- name of field -->
+		<config>
+			<offset>0x600000</offset>            <!-- offset in the header -->
+			<size format='FileSize'>inputs/uRamdisk</size>              <!-- size in the header -->
+		</config>
+		<content format='FileContent'>inputs/uRamdisk</content>  <!-- content the user should fill -->
+	</BinField>
+	
+</Bin_Ecc_Map>
