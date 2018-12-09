@@ -3,8 +3,12 @@ Image Generation And Programming Scripts for Poleg BMC
 
 ## How to use
 IGPS is written for Python 2.7
-Please make sure you have it installed and added to your %PATH%
-If you are a windows user, the following tools are available as exe files inside the package. For Linux users please download and compile the follwonig tools:
+
+Please make sure you have it installed and added to your %PATH%.
+
+If you are a windows user, the following tools are available as exe files inside the package.
+
+For Linux users please download and compile the follwonig tools:
 
 ### 1.	Bingo
 https://github.com/Nuvoton-Israel/bingo
