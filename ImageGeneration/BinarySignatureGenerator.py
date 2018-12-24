@@ -98,6 +98,10 @@ def convertBinToDER(public, private):
 
 def sign_binary_openssl(bin_filename, begin_offset, privkey_filename, modulu_filename, embed_signature, output_filename):
 
+	_openssl = openssl
+	if os.name != "nt":
+		_openssl = linux_prefix + openssl
+
 	currpath = os.getcwd()
 	os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
@@ -131,7 +135,7 @@ def sign_binary_openssl(bin_filename, begin_offset, privkey_filename, modulu_fil
 
 		# call openssl to generate a signature
 		cmd = "%s dgst -sha256 -binary -keyform der -out %s -sign %s %s" \
-		% (openssl, output_filename, key_filename, signed_area_filename)
+		% (_openssl, output_filename, key_filename, signed_area_filename)
 
 		rc = os.system(cmd)
 		if rc != 0:

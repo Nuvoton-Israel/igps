@@ -103,7 +103,7 @@
 			<offset>0x120</offset>        <!-- offset in the header -->
 			<size>0x4</size>              <!-- size in the header -->
 		</config>
-		<content format='32bit'>0x02</content>                                   <!--Board_type: EB-->
+		<content format='32bit'>0x0A</content>                                   <!--Board_type: SVB-->
 	</BinField>
 	
 	<!-- the next two fields are available since version 10.7.0 -->

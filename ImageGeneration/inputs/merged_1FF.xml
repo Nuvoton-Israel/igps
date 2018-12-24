@@ -35,7 +35,7 @@
 	<BinField>
 		<name>uboot_env</name>         <!-- name of field -->
 		<config>
-			<offset>0x80000</offset>            <!-- offset in the header -->
+			<offset>0x100000</offset>            <!-- offset in the header -->
 			<size format='FileSize'>inputs/uboot_env.bin</size>              <!-- size in the header -->
 		</config>
 		<content format='FileContent'>inputs/uboot_env.bin</content>  <!-- content the user should fill -->
