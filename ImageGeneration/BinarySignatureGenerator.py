@@ -21,7 +21,7 @@ def sign_binary(binfile, begin_offset, priv_key, modulu, embed_signature, output
 
 
 signit = "signit"
-linux_prefix = "sudo ./"
+linux_prefix = "sudo "
 
 
 class SignitError(Exception):
