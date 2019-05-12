@@ -34,6 +34,10 @@ UbootAndHeader_secure_bin = os.path.join(secure_outputs_dir, "UbootAndHeader.bin
 mergedBootBlockAndUboot_xml = os.path.join(inputs_dir, "mergedBootBlockAndUboot.xml")
 mergedBootBlockAndUboot_basic_bin = os.path.join(basic_outputs_dir, "mergedBootBlockAndUboot.bin")
 mergedBootBlockAndUboot_secure_bin = os.path.join(secure_outputs_dir, "mergedBootBlockAndUboot.bin")
+mergedBootBlockAndUboot_secure_short_bin = os.path.join(secure_outputs_dir, "BootBlockAndHeader_short.bin")
+
+mergedBootBlockAndUbootFuses_xml = os.path.join(inputs_dir, "mergedSecureBoot.xml")
+mergedBootBlockAndUbootFuses_bin = os.path.join(secure_outputs_dir, "mergedSecureBoot.bin")
 
 merged_1FF_xml = os.path.join(inputs_dir, "merged_1FF.xml")
 merged_1FF_basic_bin = os.path.join(basic_outputs_dir, "merged_1FF.bin")
@@ -47,6 +51,9 @@ poleg_key_map_bin = os.path.join(secure_outputs_dir, "poleg_key_map.bin")
 
 poleg_fuse_map_xml = os.path.join(inputs_dir, "poleg_fuse_map.xml")
 poleg_fuse_map_bin = os.path.join(secure_outputs_dir, "poleg_fuse_map.bin")
+
+poleg_merged_fuses_xml = os.path.join(inputs_dir, "mergedFuses.xml")
+poleg_merged_fuses_bin = os.path.join(secure_outputs_dir, "mergedFuses.bin")
 
 
 def run():
@@ -106,7 +113,7 @@ def run():
 			rsa_public_key_0_bin, 0x8, UbootAndHeader_bin)
 
 		print("==========================================================")
-		print("== Merging %s and %s" % (BootBlockAndHeader_bin, UbootAndHeader_bin))
+		print("== Merging secure %s and %s" % (BootBlockAndHeader_bin, UbootAndHeader_bin))
 		generate_binary(mergedBootBlockAndUboot_xml, mergedBootBlockAndUboot_secure_bin)
 
 		move(BootBlockAndHeader_bin, BootBlockAndHeader_secure_bin)
@@ -120,8 +127,18 @@ def run():
 		print("== Generating %s" % (poleg_fuse_map_bin))
 		generate_binary(poleg_fuse_map_xml, poleg_fuse_map_bin)
 
+		print("==========================================================")
+		print("== Generating %s" % (poleg_merged_fuses_bin))
+		generate_binary(poleg_merged_fuses_xml, poleg_merged_fuses_bin)
+
+		print("==========================================================")
+		print("== Merging secure %s and %s" % (mergedBootBlockAndUboot_secure_bin, poleg_merged_fuses_bin))
+		generate_binary(mergedBootBlockAndUbootFuses_xml, mergedBootBlockAndUbootFuses_bin)
+		move(mergedBootBlockAndUboot_secure_bin, mergedBootBlockAndUboot_secure_short_bin)
+		move(mergedBootBlockAndUbootFuses_bin, mergedBootBlockAndUboot_secure_bin)
+
 	except (Exception) as e:
-		print("Error building binaries (%s)" % (e.strerror))
+		print("Error building binaries (%s)" % str(e))
 		raise
 
 	finally:

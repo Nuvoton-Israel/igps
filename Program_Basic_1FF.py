@@ -2,7 +2,7 @@
 #
 # Nuvoton IGPS: Image Generation And Programming Scripts For Poleg BMC
 #
-# Copyright (C) 2018 Nuvoton Technologies, All Rights Reserved
+# Copyright (C) 2019 Nuvoton Technologies, All Rights Reserved
 #-------------------------------------------------------------------------
 
 import os
@@ -11,8 +11,6 @@ from shutil import copyfile
 
 import ImageGeneration.BinaryGenerator
 import ImageProgramming.Program
-
-FW_body_location = 0x100000
 
 Programming_inputs_dir = os.path.join("ImageProgramming", "inputs")
 Intermediate_dir = os.path.join("ImageGeneration", "intermediate")
@@ -49,9 +47,7 @@ try:
 	if not os.path.isfile(FW_bin_intermediate):
 		print("missing: " + FW_bin_intermediate)
 
-
-	ImageProgramming.Program.run(	FW_body_location,						\
-									os.path.abspath(FW_and_Header_bin),		\
+	ImageProgramming.Program.run(	os.path.abspath(FW_and_Header_bin),		\
 									os.path.abspath(FW_Programming_bin))
 except Exception as e:
 	print(e)

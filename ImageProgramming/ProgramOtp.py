@@ -2,48 +2,64 @@
 #
 # Nuvoton IGPS: Image Generation And Programming Scripts For Poleg BMC
 #
-# Copyright (C) 2018 Nuvoton Technologies, All Rights Reserved
+# Copyright (C) 2019 Nuvoton Technologies, All Rights Reserved
 #-------------------------------------------------------------------------
 
 import sys
 import os
 import filecmp
 
-import MemoryControllerInit
 import ProgrammingErrors
-import UartUpdate
+import ProgrammerMonitor
 
-programmer_monitor_addr = 0xFFFD6000
-programmer_monitor_bin = os.path.join("inputs", "Poleg_programmer_monitor.bin")
-
-header_location = 0xFFFDC000
 otp_cmp_bin = "_otp.bin.cmp"
-
-body_location = 0xFFFE0000
 
 otp_size = 1024
 
 def not_8(x): return (x ^ 0xff)
 def is_valid_write(curr, to_program): return (not_8(curr) | (curr & to_program)) == 0xff
 
-def nibble_parity_check(current_fuse_array, fuse_array_to_program, otp, field):
+def nibble_parity_check(fuse_array, otp, field):
 
-	curr = current_fuse_array[otp[field][0]:otp[field][1]]
-	to_prog = fuse_array_to_program[otp[field][0]:otp[field][1]]
+	offset = otp[field][0]
+	size = otp[field][1] - otp[field][0]
 
-	# Illegal if current and to_programmeed are both non-zeros
-	if any(i != 0 for i in curr) and any(i != 0 for i in to_prog):
-		print("Error: %s is already programmed" % field)
-		raise Exception("OTP image cannot be programmed, please modify your otp map file")
-	else:
-		# current or to_program are zeroes, new image field will be the non-zero value (or zero, in case both are)
-		for i in range(otp[field][0], otp[field][1]):
-			fuse_array_to_program[i] |= current_fuse_array[i]
+	# for each byte in the field
+	for i in range(0, size * 2):
 
-	return fuse_array_to_program
+		E0 = (fuse_array[offset + i] >> 0) & 0x01
+		E1 = (fuse_array[offset + i] >> 1) & 0x01
+		E2 = (fuse_array[offset + i] >> 2) & 0x01
+		E3 = (fuse_array[offset + i] >> 3) & 0x01
+
+		dataout = fuse_array[offset + i] & 0x0f
+		dataout |= (E0 ^ E1) << 4
+		dataout |= (E2 ^ E3) << 5
+		dataout |= (E0 ^ E2) << 6
+		dataout |= (E1 ^ E3) << 7
+
+		if dataout != fuse_array[offset + i]:
+			raise Exception("Nibble parity error in field %s, image cannot be programmed" % field)
+
+	return fuse_array
+
 
 # check if there are 0's that are going to be written on '1's
-def majority_check(current_fuse_array, fuse_array_to_program, otp, field):
+def majority_check(fuse_array, otp, field):
+
+	offset = otp[field][0]
+	size = otp[field][1] - otp[field][0]
+
+	# for each byte in the field
+	for i in range(0, size):
+		if fuse_array[offset + i] != fuse_array[offset + size + i] or fuse_array[offset + i] != fuse_array[offset + size * 2 + i]:
+			raise Exception("Majority error in field %s, image cannot be programmed" % field)
+
+	return fuse_array
+
+
+# check if there are 0's that are going to be written on '1's
+def valididity_check(current_fuse_array, fuse_array_to_program, otp, field):
 
 	curr = current_fuse_array[otp[field][0]:otp[field][1]]
 	to_prog = fuse_array_to_program[otp[field][0]:otp[field][1]]
@@ -87,7 +103,8 @@ def check_fields(current_fuse_array, fuse_array_to_program, otp):
 
 	# check fields, change the fuse array if needed
 	for field in otp:
-		fuse_array_to_program = otp[field][2](current_fuse_array, fuse_array_to_program, otp, field)
+		fuse_array_to_program = otp[field][2](fuse_array_to_program, otp, field)
+		fuse_array_to_program = valididity_check(current_fuse_array, fuse_array_to_program, otp, field)
 
 	return fuse_array_to_program
 
@@ -145,20 +162,12 @@ def run(otp_name, otp_prog_header, otp_bin, otp_read_header):
 		if (not os.path.exists(otp_bin)):
 			raise ValueError(otp_bin + " is missing")
 
-		[port, baudrate] = UartUpdate.check_com()
-
-		print("Monitor programming...")
-		UartUpdate.uart_write_to_mem(port, baudrate, programmer_monitor_addr, programmer_monitor_bin)
-
-		print("Memory init...")
-		MemoryControllerInit.memory_controller_init(port, baudrate)
+		ProgrammerMonitor.load_monitor()
 
 		print("==============================")
 		print(otp_name + ": read otp..." )
 		print("==============================")
-		UartUpdate.uart_write_to_mem(port, baudrate, header_location, otp_read_header)
-		UartUpdate.uart_execute_returnable_code(port, baudrate, programmer_monitor_addr)
-		UartUpdate.uart_read_from_mem(port, baudrate, 0xFFFE1000, otp_size, cmp_bin)
+		ProgrammerMonitor.fuse_read(otp_name, otp_size, otp_read_header, cmp_bin)
 
 		# check if the input file can be programmed to the otp
 		otp_bin = check_otp_bin(otp_name, cmp_bin, otp_bin)
@@ -167,31 +176,25 @@ def run(otp_name, otp_prog_header, otp_bin, otp_read_header):
 		print(otp_name + ": programming...")
 		print("otp_prog_header " + otp_prog_header + "    prog file " + otp_bin) 
 		print("==============================")
-		UartUpdate.uart_write_to_mem(port, baudrate, header_location, otp_prog_header)
-		UartUpdate.uart_write_to_mem(port, baudrate, body_location, otp_bin)
-		UartUpdate.uart_execute_returnable_code(port, baudrate, programmer_monitor_addr)
-
+		ProgrammerMonitor.fuse_program(otp_name, otp_prog_header, otp_bin)
+		
 		print("==============================")
 		print(otp_name + ": compare entire binary..." )
 		print("==============================")
-		UartUpdate.uart_write_to_mem(port, baudrate, header_location, otp_read_header)
-		UartUpdate.uart_execute_returnable_code(port, baudrate, programmer_monitor_addr)
-		UartUpdate.uart_read_from_mem(port, baudrate, 0xFFFE1000, otp_size, cmp_bin)
-
+		ProgrammerMonitor.fuse_read(otp_name, otp_size, otp_read_header, cmp_bin)
 		if not filecmp.cmp(otp_bin, cmp_bin):
 			ProgrammingErrors.print_error_compare_error(run.__name__, otp_bin, cmp_bin)
 
-		print("==============================")
-		print(otp_name + ":  read monitor log to file " + otp_name + "_monitor_log.bin" )
-		print("==============================")		
-		UartUpdate.uart_read_from_mem(port, baudrate, 0xFFFDBF00, 256, otp_name + "_monitor_log.bin")
+		ProgrammerMonitor.read_monitor_log(otp_name + "_monitor_log.bin")
 
 		print("==============================")
 		print(otp_name + ": program %s Pass" % (otp_bin))
 		print("==============================")
 
-	except (UartUpdate.UartError, IOError) as e:
-		ProgrammingErrors.print_error(e.value)
+	except Exception as e:
+		print("Program %s Failed" % otp_bin)
+		ProgrammerMonitor.read_monitor_log("otp_prog_monitor_log.bin")
+		raise
 
 	finally:
 		os.chdir(currpath)

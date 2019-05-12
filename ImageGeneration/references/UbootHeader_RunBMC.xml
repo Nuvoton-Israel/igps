@@ -139,20 +139,10 @@
 	</BinField>
 	
 	<BinField>
-		<!-- Defines if FIU3 CS0 is enabled -->
-		<name>fiu3_cs0_en</name>  <!-- name of field -->
-		<config>
-			<offset>0x119</offset>        <!-- offset in the header -->
-			<size>0x1</size>              <!-- size in the header -->
-		</config>
-		<content format='bytes'>0x0</content>               <!-- content the user should fill -->
-	</BinField>
-	
-	<BinField>
 		<!-- Defines if FIU3 CS1 is enabled -->
 		<name>fiu3_cs1_en</name>  <!-- name of field -->
 		<config>
-			<offset>0x11A</offset>        <!-- offset in the header -->
+			<offset>0x119</offset>        <!-- offset in the header -->
 			<size>0x1</size>              <!-- size in the header -->
 		</config>
 		<content format='bytes'>0x0</content>               <!-- content the user should fill -->
@@ -162,7 +152,7 @@
 		<!-- Defines if FIU3 CS2 is enabled -->
 		<name>fiu3_cs2_en</name>  <!-- name of field -->
 		<config>
-			<offset>0x11B</offset>        <!-- offset in the header -->
+			<offset>0x11A</offset>        <!-- offset in the header -->
 			<size>0x1</size>              <!-- size in the header -->
 		</config>
 		<content format='bytes'>0x0</content>               <!-- content the user should fill -->
@@ -172,7 +162,7 @@
 		<!-- Defines if FIU3 CS3 is enabled -->
 		<name>fiu3_cs3_en</name>  <!-- name of field -->
 		<config>
-			<offset>0x11C</offset>        <!-- offset in the header -->
+			<offset>0x11B</offset>        <!-- offset in the header -->
 			<size>0x1</size>              <!-- size in the header -->
 		</config>
 		<content format='bytes'>0x0</content>               <!-- content the user should fill -->
@@ -185,7 +175,19 @@
 			<offset>0x148</offset>        <!-- offset in the header -->
 			<size>0x4</size>              <!-- size in the header -->
 		</config>
-		<content format='32bit'>0x0201</content>               <!-- content the user should fill -->
+		<content format='32bit'>0</content>               <!-- content the user should fill -->
 	</BinField>
+	
+		<!-- BMC optional fields -->
+	<BinField>
+		<!-- Word contents copied by BB code to FIU0 FIU_DWR_CFG register -->
+		<name>FIU0_DWR_CFG_Set</name>  <!-- name of field -->
+		<config>
+			<offset>0x14C</offset>        <!-- offset in the header -->
+			<size>0x4</size>              <!-- size in the header -->
+		</config>
+		<content format='32bit'>0x03001102</content>               <!-- content the user should fill -->
+	</BinField>
+	
 	
 </Bin_Ecc_Map>

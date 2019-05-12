@@ -18,7 +18,7 @@ import ImageGeneration.GenerateImages
 versions_dir = os.path.join("ImageGeneration", "versions")
 ref_dir = os.path.join("ImageGeneration", "references")
 
-BootBlock_bin_source = os.path.join(versions_dir, bootblock_poleg)
+BootBlock_bin_source = os.path.join(versions_dir, bootblock_poleg_secure)
 BBheader_xml_source = os.path.join(ref_dir, "BootBlockAndHeader_EB.xml")
 
 uboot_bin_source = os.path.join(versions_dir, uboot_poleg)
