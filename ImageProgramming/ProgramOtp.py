@@ -22,7 +22,7 @@ def is_valid_write(curr, to_program): return (not_8(curr) | (curr & to_program))
 def nibble_parity_check(fuse_array, otp, field):
 
 	offset = otp[field][0]
-	size = otp[field][1] - otp[field][0]
+	size = (otp[field][1] - otp[field][0]) / 2
 
 	# for each byte in the field
 	for i in range(0, size * 2):
@@ -48,7 +48,7 @@ def nibble_parity_check(fuse_array, otp, field):
 def majority_check(fuse_array, otp, field):
 
 	offset = otp[field][0]
-	size = otp[field][1] - otp[field][0]
+	size = (otp[field][1] - otp[field][0]) / 3
 
 	# for each byte in the field
 	for i in range(0, size):
@@ -70,32 +70,32 @@ def valididity_check(current_fuse_array, fuse_array_to_program, otp, field):
 		if not is_valid_write(curr[i], to_prog[i]):
 			# Show warning if any '0' bit is going to be programmed on '1' bit, and change it to '1'
 			fuse_array_to_program[otp[field][0] + i] |= curr[i]
-			print("byte %d in %s (=0x%x) cannot be programmed to the otp (current value is 0x%x)" % (i, field, to_prog[i], curr[i]))
+			print("byte %d in %s (=0x%x) cannot be programmed to the otp (current value is 0x%x)" % (otp[field][0] + i, field, to_prog[i], curr[i]))
 
 	return fuse_array_to_program
 
 
 fuse_fields = {
-	'FUSTRAP': (0, 4, majority_check),
-	'CP_FUSTRAP': (12, 14, majority_check),
-	'DAC_Calibration_Word': (16, 20, nibble_parity_check),
-	'ADC_Calibration_Word': (24, 28, nibble_parity_check),
-	'Verification_Fault_Module_Protection': (32, 36, nibble_parity_check),
-	'oFSVFP': (40, 42, majority_check),
-	'oFSAP': (52, 54, majority_check),
-	'oKAP': (58, 60, majority_check),
-	'Derivative_Word': (64, 68, nibble_parity_check),
-	'oPKValue2_second_half': (256, 384, nibble_parity_check),
-	'oPKValue1': (512, 768, nibble_parity_check)
+	'FUSTRAP': (0, 12, majority_check),
+	'CP_FUSTRAP': (12, 4, majority_check),
+	'DAC_Calibration_Word': (16, 24, nibble_parity_check),
+	'ADC_Calibration_Word': (24, 32, nibble_parity_check),
+	'Verification_Fault_Module_Protection': (32, 40, nibble_parity_check),
+	'oFSVFP': (40, 46, majority_check),
+	'oFSAP': (52, 58, majority_check),
+	'oKAP': (58, 64, majority_check),
+	'Derivative_Word': (64, 72, nibble_parity_check),
+	'oPKValue2_second_half': (256, 512, nibble_parity_check),
+	'oPKValue1': (512, 1024, nibble_parity_check)
 }
 
 key_fields = {
-	'oAESKEY0': (0, 32, nibble_parity_check),
-	'oAESKEY1': (64, 96, nibble_parity_check),
-	'oAESKEY2': (128, 160, nibble_parity_check),
-	'oAESKEY3': (192, 224, nibble_parity_check),
-	'oPKValue2_first_half': (256, 384, nibble_parity_check),
-	'oPKValue0': (512, 768, nibble_parity_check)
+	'oAESKEY0': (0, 64, nibble_parity_check),
+	'oAESKEY1': (64, 128, nibble_parity_check),
+	'oAESKEY2': (128, 192, nibble_parity_check),
+	'oAESKEY3': (192, 256, nibble_parity_check),
+	'oPKValue2_first_half': (256, 512, nibble_parity_check),
+	'oPKValue0': (512, 1024, nibble_parity_check)
 }
 
 
@@ -131,14 +131,14 @@ def check_otp_bin(otp_name, current_otp_filename, otp_bin_filename):
 	# check if the fuse array was changed
 	if cmp(origin_to_program, to_program) != 0:
 
-		reply = str(raw_input("Warning: otp is not empty, after programming the otp may be different from the input image. Type 'y' to continue:").strip())
-		if reply != "y":
-			raise Exception("OTP image cannot be programmed, please modify your otp map file")
-
 		modified_otp_bin_filename = "%s.modified" % otp_bin_filename
 		_file = open(modified_otp_bin_filename, "wb")
 		_file.write(to_program)
 		_file.close()
+
+		reply = str(raw_input("Warning: otp is not empty, after programming the otp may be different from the input image (new image file is %s). Type 'y' to continue:" % modified_otp_bin_filename).strip())
+		if reply != "y":
+			raise Exception("OTP image cannot be programmed, please modify your otp map file")
 
 		return modified_otp_bin_filename
 
