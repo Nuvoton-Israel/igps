@@ -108,7 +108,7 @@ def run():
 			rsa_public_key_0_bin, 0x8, BootBlockAndHeader_bin)
 
 		print("==========================================================")
-		print("== Signing %s" % (mergedBootBlockAndUboot_secure_bin))
+		print("== Signing %s" % (UbootAndHeader_secure_bin))
 		sign_binary(UbootAndHeader_bin, 0x140, rsa_private_key_0_bin, \
 			rsa_public_key_0_bin, 0x8, UbootAndHeader_bin)
 
