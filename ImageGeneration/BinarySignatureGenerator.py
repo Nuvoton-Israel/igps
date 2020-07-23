@@ -11,8 +11,9 @@ import os
 
 def sign_binary(binfile, begin_offset, priv_key, modulu, embed_signature, outputFile):
 	
-	if os.name != "win32":
-		signit_filename = signit + ".exe"
+	signit_filename = signit
+	if os.name != "nt":
+		signit_filename = linux_prefix + signit
 
 	if os.path.isfile(os.path.join(os.getcwd(), signit_filename)):
 		sign_binary_signit(binfile, begin_offset, priv_key, modulu, embed_signature, outputFile)
