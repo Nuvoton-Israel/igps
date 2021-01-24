@@ -50,8 +50,6 @@ IGPS 02.01.16             - Jan 24th 2021
 - RunBMC: BootBlock 10.10.16.  Please review BootBlock readme for details:
   https://github.com/Nuvoton-Israel/bootblock/releases/tag/BootBlock_10.10.16
 
-- Security support: BootBlock 10.09.16. 
-
 FIXED ISSUES
 ------------
 - None
