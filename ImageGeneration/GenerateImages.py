@@ -2,7 +2,7 @@
 #
 # Nuvoton IGPS: Image Generation And Programming Scripts For Poleg BMC
 #
-# Copyright (C) 2018 Nuvoton Technologies, All Rights Reserved
+# Copyright (C) 2021 Nuvoton Technologies, All Rights Reserved
 #-------------------------------------------------------------------------
 
 import sys

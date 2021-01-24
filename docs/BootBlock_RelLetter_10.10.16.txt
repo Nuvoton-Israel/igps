@@ -7,8 +7,8 @@
 
 # NPCM7XX bootBlock Package
 Release Letter
-Version: 10.10.09
-Date:    Oct 2019
+Version: 10.10.16
+Date:    Nov 2020
 
 
 # PACKAGE CONTENTS
@@ -37,12 +37,11 @@ to flash via the IGPS (https://github.com/Nuvoton-Israel/igps) or other means.
 
 
 # ENHANCEMENTS
-------------
-Bootblock 10.10.09     Date: 27.10.19 
+----------------
+Bootblock 10.10.16     Date: 11.11.20
 ==================     ===============
-- CLK: fix an issue when setting MC and CPU clocks to different values (using the header).
-- eSPI: init only on PORST. 
-
+- MC: start enhanced training in 0x14.
+- MC: when find a step in enhanced training, take +4 (was +2)
 
 # FIXED ISSUES
 ------------
@@ -55,7 +54,37 @@ Bootblock 10.10.09     Date: 27.10.19
 
 
 # HISTORY
--------
+-------------------
+Bootblock 10.10.15     Date: 22.10.20
+==================     ===============
+- MC: add option to change enhanced training range.
+- MC: Change default enhanced training range to [0x16:0x28].
+- MC: minimum DQS eye is 30.
+- MC: in enhanced training sweep only in DQS, not out DQS.
+
+Bootblock 10.10.13     Date: 19.10.20
+==================     ===============
+- MC: add option to override DQS in and out init values from header.
+
+Bootblock 10.10.11     Date: 26.11.19 
+==================     ===============
+- Fix an issue in INTCR3 settings (FIU_FIX field).
+
+Bootblock 10.10.12     Date: 21.07.20
+==================     ===============
+- SPI0 frequency is now only limited to be up to 50MHz (remove 40MHz lower limit).
+  This check is only performed if PLLs are changes (RUN_BMC or new header frequency values).
+
+Bootblock 10.10.10     Date: 17.11.19 
+==================     ===============
+- MC: in enhanced training: change the sweep range accrording to the location of the step. (run time optimization)
+
+Bootblock 10.10.09     Date: 27.10.19 
+==================     ===============
+- CLK: fix an issue when setting MC and CPU clocks to different values (using the header).
+- eSPI: init only on PORST. 
+
+
 Bootblock 10.10.08
 ==================
 - MC: longer memory test in DQS sweep.

@@ -1,12 +1,12 @@
 -----------------------------------------------------------------------------
 Nuvoton Technology Corporation - Confidential
 NPCM7XX (Poleg) Image generation and programming scripts Release Letter
-Copyright (c) 2019 Nuvoton Technology Corporation. All Rights Reserved.
+Copyright (c) 2021 Nuvoton Technology Corporation. All Rights Reserved.
 -----------------------------------------------------------------------------
 
 NPCM750   Image generation and programming scripts Package Release Letter
-Version:  02.01.12
-Date:     Oct 2019
+Version:  02.01.16
+Date:     Jan 2021
 
 This package is released under the terms of the Source Code License Agreement
 which is included in this package.
@@ -38,23 +38,23 @@ For linux users:
 
 For Windows users:
 ------------------
-- Run UpdateInputsBinaries_XYZ.bat - XYZ is the name of your setup. If this file is missing for your spesific board please contact Nuvoton.
+- Run UpdateInputsBinaries_XYZ.bat - XYZ is the name of your setup. If this file is missing for your specific board please contact Nuvoton.
 - Run GenerateAll.bat to build combined image. 
 - Run ProgramAll_Basic.bat  or  ProgramAll_Secure.bat.
-For further information please review  Image_Generation_and_Programming_1.8.8/docs/How_to_generate_and_program_images.html
+For further information please review  Image_Generation_and_Programming_2.1.16/docs/How_to_generate_and_program_images.html
 
 ENHANCEMENTS
 ------------
-IGPS 02.01.12
+IGPS 02.01.16             - Jan 24th 2021
 =================================================
-- BootBlock 10.10.09. Please review BootBlock readme for details.
+- RunBMC: BootBlock 10.10.16.  Please review BootBlock readme for details:
+  https://github.com/Nuvoton-Israel/bootblock/releases/tag/BootBlock_10.10.16
+
+- Security support: BootBlock 10.09.16. 
 
 FIXED ISSUES
 ------------
-IGPS 02.01.11  
-=================================================
-- BootBlock 10.9.14 for security users.
-
+- None
 
 KNOWN ISSUES
 ------------
@@ -63,6 +63,29 @@ KNOWN ISSUES
 
 HISTORY
 -------
+IGPS 02.01.15             - Oct 22th 2020
+=================================================
+- BootBlock 10.10.15.  Please review BootBlock readme for details:
+  https://github.com/Nuvoton-Israel/bootblock/releases/tag/BootBlock_10.10.15
+
+
+IGPS 02.01.13             - Jul 23th 2020
+=================================================
+- BootBlock 10.10.12. Please review BootBlock readme for details:
+  https://github.com/Nuvoton-Israel/bootblock/releases/tag/BootBlock_10.10.12
+- Fix links for Python2 installation path.
+- Replace  os.name != "win32" 
+  with     os.name != "nt"
+
+IGPS 02.01.14
+=============
+- BootBlock 10.10.13.
+- Change DQS in and out init values via the header.
+
+IGPS 02.01.12
+=================================================
+- BootBlock 10.10.09. Please review BootBlock readme for details.
+
 IGPS 02.01.11  
 =================================================
 - BootBlock 10.9.14 for security users.
@@ -113,7 +136,7 @@ IGPS 02.01.02
 - BootBlock 10.10.02. Please review BootBlock readme for details.
 - BootBlock has three possible binaries: basic, secure and nist (support NIST800-193). 
   Different boards and vendors can use these version according to security needs. 
-  The Package does not contain the NIST800-193 version binaries. Please contact Nuvoton to recieve the binaries.
+  The Package does not contain the NIST800-193 version binaries. Please contact Nuvoton to receive the binaries.
   Note: BootBlock sources, as published on GitHub, contain only basic mode.
   
 IGPS 02.01.01

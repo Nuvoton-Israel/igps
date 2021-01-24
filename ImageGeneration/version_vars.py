@@ -1,5 +1,5 @@
-bootblock_poleg_basic  = "Poleg_bootblock_basic.10.10.12.bin"
-bootblock_poleg_secure = "Poleg_bootblock_secure.10.10.12.bin"
+bootblock_poleg_basic  = "Poleg_bootblock_basic.10.10.16.bin"
+bootblock_poleg_secure = "Poleg_bootblock_secure.10.10.16.bin"
 uboot_poleg            = "u-boot_2019.01.7.5.bin"
 linux_uimage           = "uimage_4.17.4.01.03"
 linux_uRamdisk         = "uRamdisk_4.17.4.01.03"
