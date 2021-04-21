@@ -1,0 +1,317 @@
+-----------------------------------------------------------------------------
+Nuvoton Technology Corporation - Confidential
+NPCM7XX (Poleg) Image generation and programming scripts Release Letter
+Copyright (c) 2021 Nuvoton Technology Corporation. All Rights Reserved.
+-----------------------------------------------------------------------------
+
+NPCM750   Image generation and programming scripts Package Release Letter
+Version:  02.01.17
+Date:     Mar 2021
+
+This package is released under the terms of the Source Code License Agreement
+which is included in this package.
+
+PACKAGE CONTENTS
+----------------
+This package contains Image generation and programming scripts. For further information please review the "docs" folder.
+
+DESCRIPTION
+-----------
+This package contains the Nuvoton Poleg Image generation and programming scripts for the NPCM750 and NPCM730.
+This package is released in alpha quality.
+
+REQUIREMENTS
+------------
+Hardware:
+- A Nuvoton NPCM750\NPCM730 A1 Silicon version BMC device.
+- COM port cable. For DRB use a null modem cable. For EB use a USB cable (EB has an FTDI USB to COM device).
+
+
+INSTALLATION PROCEDURE
+----------------------
+For linux users:
+----------------
+- Run ImageGeneration/UpdateInputsBinaries_<board>.py to update image inputs of one of the available boards, or
+  add your inputs manually to ImageGeneration/inputs.
+- Run GenerateAll.py to build combined images. 
+- Run ProgramAll_Basic.py  or  ProgramAll_Secure.py.
+
+For Windows users:
+------------------
+- Run UpdateInputsBinaries_XYZ.bat - XYZ is the name of your setup. If this file is missing for your specific board please contact Nuvoton.
+- Run GenerateAll.bat to build combined image. 
+- Run ProgramAll_Basic.bat  or  ProgramAll_Secure.bat.
+For further information please review  Image_Generation_and_Programming_2.1.16/docs/How_to_generate_and_program_images.html
+
+ENHANCEMENTS
+------------
+IGPS 02.01.17             - Mar 25th 2021
+=================================================
+- BootBlock 10.10.17.  Please review BootBlock readme for details:
+  https://github.com/Nuvoton-Israel/bootblock/releases/tag/BootBlock_10.10.17
+
+FIXED ISSUES
+------------
+- None
+
+KNOWN ISSUES
+------------
+- None.
+
+
+HISTORY
+-------
+IGPS 02.01.16             - Jan 24th 2021
+=================================================
+- RunBMC: BootBlock 10.10.16.  Please review BootBlock readme for details:
+  https://github.com/Nuvoton-Israel/bootblock/releases/tag/BootBlock_10.10.16
+
+- Security support: BootBlock 10.09.16. 
+
+IGPS 02.01.15             - Oct 22th 2020
+=================================================
+- BootBlock 10.10.15.  Please review BootBlock readme for details:
+  https://github.com/Nuvoton-Israel/bootblock/releases/tag/BootBlock_10.10.15
+
+
+IGPS 02.01.13             - Jul 23th 2020
+=================================================
+- BootBlock 10.10.12. Please review BootBlock readme for details:
+  https://github.com/Nuvoton-Israel/bootblock/releases/tag/BootBlock_10.10.12
+- Fix links for Python2 installation path.
+- Replace  os.name != "win32" 
+  with     os.name != "nt"
+
+IGPS 02.01.14
+=============
+- BootBlock 10.10.13.
+- Change DQS in and out init values via the header.
+
+IGPS 02.01.12
+=================================================
+- BootBlock 10.10.09. Please review BootBlock readme for details.
+
+IGPS 02.01.11  
+=================================================
+- BootBlock 10.9.14 for security users.
+
+IGPS 02.01.10  
+=================================================
+- BootBlock 10.9.13 for security users.
+- uboot.bin and xmls updated with files from to Dell. 
+
+IGPS 02.01.09
+=================================================
+- BootBlock 10.9.12 for security users.
+- BootBlock 10.10.8 for NIST800-193 and no security at all users (same as 2.1.8).
+
+IGPS 02.01.08
+=================================================
+- Uart Update Tool v2.1.0
+- BootBlock 10.9.11 for security users.
+- BootBlock 10.10.8 for NIST800-193 and no security at all users.
+- Uboot 2019.1.7.5
+
+IGPS 02.01.07
+=================================================
+- BootBlock 10.10.07. Please review BootBlock readme for details.
+
+IGPS 02.01.06
+=================================================
+- ProgramOtp: changed field sizes to include their ECC.
+- BootBlock 10.10.06. Please review BootBlock readme for details.
+- Uboot 2019.01.01.04. based on BRANCH=npcm7xx-v2019.01, COMMIT=d8d75f72b9e324f47b0657dcaac9edf4433267ea
+- Remove DDR enhanced training from BootBlock xml's.
+
+IGPS 02.01.05
+=================================================
+- BootBlock 10.10.05. Please review BootBlock readme for details.
+
+IGPS 02.01.04
+=================================================
+- BootBlock 10.10.04. Please review BootBlock readme for details.
+- Uboot 2019.01.01.03
+
+IGPS 02.01.03
+=================================================
+- BootBlock 10.10.03. Please review BootBlock readme for details.
+
+IGPS 02.01.02
+=================================================
+- BootBlock 10.10.02. Please review BootBlock readme for details.
+- BootBlock has three possible binaries: basic, secure and nist (support NIST800-193). 
+  Different boards and vendors can use these version according to security needs. 
+  The Package does not contain the NIST800-193 version binaries. Please contact Nuvoton to receive the binaries.
+  Note: BootBlock sources, as published on GitHub, contain only basic mode.
+  
+IGPS 02.01.01
+=================================================
+- BootBlock 10.10.01. Please review BootBlock readme for details.
+- Add WD number, WD stay on and GPIO field to the header(for heartbeat).
+
+IGPS 02.01.00
+=================================================
+- BootBlock 10.10.00: Bug fixes for NIST800-193. Please review BootBlock readme for details.
+- Rearrange BootBlock header fields.
+
+IGPS 02.00.10
+=================================================
+- BootBlock 10.9.10: Maintenance release based on 10.9.3 (no NIST support)
+- Add to uboot header : fiu_dwr_cfg. Remove fiu3_cs0_en (cs0 is always enabled).
+- Rearrange BootBlock header fields.
+
+IGPS 02.00.09
+=================================================
+- BootBlock 10.9.9: Bug fix: last section from last hole to end of flash was not copied.
+
+IGPS 02.00.08
+=================================================
+- BootBlock 10.9.8: support NIST, with revoke keys.
+
+IGPS 02.00.07
+=================================================
+- Separated secure programming and otp programming 
+- Added Fuse arrays to the secure merged flash image
+- Fixed OTP majority and nibble parity validation
+- u-boot_2019.01.01.00, supports secure boot initialization
+- BootBlock 10.9.7: support NIST, w\o revoke keys.
+
+IGPS 02.00.06
+=================================================
+- BB 10.9.6 , with support for NIST800-193
+- Format flash from SRAM
+- Support UART baudrate setting
+- Programmer Monitor v0.2.4
+- Uart Update Tool v2.0.4
+
+IGPS 02.00.05
+=================================================
+- Programming all images from SRAM
+- Removed MC init
+- UBOOT 2015.10.07.04
+
+IGPS 02.00.04
+=================================================
+- Linux 4.17.4.01.03.RB2_customer: Fix NCSI issue
+
+IGPS 02.00.03
+=================================================
+- Linux 4.17.4.01.03.RB1_customer
+
+IGPS 02.00.02
+=================================================
+- BootBlock 10.9.5.
+- UBOOT 2015.10.07.02
+- Linux 4.17.4.01.03
+- Use openssl (directly) to sign in case signit is not found
+- Add HOST IF BB header field.
+- Linux 4.17.4.01.03.RB1_customer
+- Use openssl (directly) to sign in case signit is not found
+- Check validity of the otp map file before programming
+
+
+IGPS 02.00.01
+=================================================
+- Force root scripts to run from the root
+- Fix 1FF options
+- Support RunBMC
+- New BootBlock version 10.9.4.
+- New Linux version 4.17.4.01.03
+
+
+Image generation and programming scripts 02.00.00
+=================================================
+- New python scripts, to support image generation and programming on Linux.
+- New BB version : 10.9.2
+
+Image generation and programming scripts 01.09.01
+=================================================
+- New BB version : 10.9.1
+
+Image generation and programming scripts 01.09.00
+=================================================
+- New BB version : 10.9.0
+
+Image generation and programming scripts 01.08.09
+=================================================
+- New BB version : 10.8.8
+- MC_CONFIG should be set to zero.
+
+Image generation and programming scripts 01.08.08
+=================================================
+- New UBOOT version:   2015.10.6.9
+- New BB version : 10.8.7
+- Change in BootBlock header : add MC_CONFIG to control training.
+
+Image generation and programming scripts 01.08.07
+=================================================
+- New UBOOT version:   2015.10.6.8
+- Update environment.
+
+
+Image generation and programming scripts 01.08.06
+=================================================
+- New BootBlock version: 10.08.05
+- New UBOOT version:   2015.10.6.7
+- New: added linux image (1FF) 4135.01.06
+
+
+Image generation and programming scripts 01.08.05
+=================================================
+- New UBOOT version:   2015.10.6.5
+- Fix FIU3_DRD_CFG_Set parameter in UbootHeader_EB.xml and UbootHeader_SVB.xml
+
+
+Image generation and programming scripts 01.08.04
+=================================================
+- New UBOOT version:   201510.6.4
+- New BootBlock version: 10.08.04
+- New Monitor version 0.2.3 : support DRAM of 1GiB too.
+
+Image generation and programming scripts 01.08.03
+=================================================
+- New UBOOT version:   201510.6.3
+
+Image generation and programming scripts 01.08.01 1.8.2  
+=================================================
+- New BootBlock version: 10.08.02.
+
+
+Image generation and programming scripts 01.08.01
+=================================================
+- New UBOOT version:   201510.6.2
+- Change flash DRD value in u-boot header for EB and SVB
+
+
+Image generation and programming scripts 01.08.00
+=================================================
+- New BootBlock version: 10.08.00.   Please review BootBlock release letter for details.
+- Support NPCM730
+
+Image generation and programming scripts 01.06.03
+=================================================
+- New BootBlock version: 40.07.01.   Please review BootBlock release letter for details.
+
+
+
+Image generation and programming scripts 01.06.02
+=================================================
+- New BootBlock version: 10.07.00   Please review BootBlock release letter for details.
+
+Image generation and programming scripts 01.06.01
+=================================================
+- New BootBlock version: 10.06.09   Please review BootBlock release letter for details.
+
+Image generation and programming scripts 01.06.00
+=================================================
+- New BootBlock version: 10.06.08   Please review BootBlock release letter for details.
+
+Image generation and programming scripts 01.05.09
+=================================================
+- New BootBlock version: 10.06.07   Please review BootBlock release letter for details.
+
+
+
+-----------------------------------------------------------
+For contact information see "Contact Us" at www.nuvoton.com
+-----------------------------------------------------------
