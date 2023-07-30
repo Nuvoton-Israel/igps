@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------                                  
- Copyright (c) 2010-2021 by Nuvoton Technology Corporation - confidential   
+ Copyright (c) 2010-2023 by Nuvoton Technology Corporation - confidential   
  All rights reserved       
 
  NPCM7XX (Poleg) BootBlock Release Letter 
@@ -7,8 +7,8 @@
 
 # NPCM7XX bootBlock Package
 Release Letter
-Version: 10.10.17
-Date:    Mar 2021
+Version: 10.10.18
+Date:    Jul 2023
 
 
 # PACKAGE CONTENTS
@@ -38,11 +38,10 @@ to flash via the IGPS (https://github.com/Nuvoton-Israel/igps) or other means.
 
 # ENHANCEMENTS
 ----------------
-Bootblock 10.10.17     Date: 21.03.21
+Bootblock 10.10.18     Date: 24.07.24
 ==================     ===============
-- Add retries to DDR training.
-- Disable MC ECC interrupts.
-- Add more memory tests at the end of the DDR training.
+- Add support for baud rate setting
+- supported baud rates 115200, 460800
 
 # FIXED ISSUES
 ------------
@@ -55,6 +54,12 @@ Bootblock 10.10.17     Date: 21.03.21
 
 
 # HISTORY
+----------------
+Bootblock 10.10.18     Date: 24.07.24
+==================     ===============
+- Add support for baud rate setting
+- supported baud rates 115200, 460800
+
 -------------------
 Bootblock 10.10.16     Date: 11.11.20
 ==================     ===============

@@ -24,7 +24,15 @@
 		</config>
 		<content format='bytes'>0x50 0x07 0x55 0xAA 0x54 0x4F 0x4F 0x42</content>  <!-- content the user should fill -->
 	</BinField>
-	
+	<BinField>
+		<!-- supported values: 115200 460800 -->
+		<name>BAUD_RATE</name>
+		<config>
+			<offset>0x120</offset>
+			<size>0x4</size> 
+		</config>
+		<content format='32bit'>115200</content>
+	</BinField>
 	<BinField>
 		<!-- Code destination address, 32-bit aligned: for BootBlock should be 0xFFFD5E00 so code will run in 0xFFFD6000 as linked for -->
 		<name>DestAddr</name>         <!-- name of field -->
